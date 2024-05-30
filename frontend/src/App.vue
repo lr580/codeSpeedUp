@@ -1,14 +1,14 @@
 <template>
-  <CodeInput/>
+  <MainPage/>
 </template>
 
 <script>
-import CodeInput from './components/CodeInput.vue'
+import MainPage from './components/MainPage.vue'
 
 export default {
   name: 'App',
   components: {
-    CodeInput
+    MainPage
   }
 }
 </script>

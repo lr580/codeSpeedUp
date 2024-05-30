@@ -53,10 +53,10 @@ export default {
     ElCol,
     LineNumbers
   },
+  props: ['code'],
   data() {
     return {
       input: '',
-      code: '#include', // 示例代码
       inputDisabled: true,
       hasStarted: false,
       correctCount: 0,

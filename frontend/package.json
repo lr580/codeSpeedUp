@@ -7,6 +7,8 @@
   },
   "dependencies": {
     "element-plus": "^2.7.3",
+    "simple-keyboard": "^3.7.83",
+    "simple-keyboard-layouts": "^3.3.105",
     "vue": "^3.0.4"
   },
   "devDependencies": {

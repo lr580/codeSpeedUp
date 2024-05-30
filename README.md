@@ -5,7 +5,8 @@
 代码目录：
 
 - `frontend/` 前端
-- `backcend/` 后端
+- `backend/` 后端
+- `backend/data/` 数据层(暂不使用数据库)
 
 运行方法：
 
