@@ -8,7 +8,7 @@
     <span class="statinfo">
       总用时：{{Math.floor(totalMilliseconds/10)}}.{{totalMilliseconds%10}} s &nbsp;
       进度：{{correctCount}} / {{code.length}} &nbsp;
-      正确率：{{Math.floor(correctCount/Math.max(1,totalCount)*100)}}% &nbsp;
+      <!-- 正确率：{{Math.floor(correctCount/Math.max(1,totalCount)*100)}}% &nbsp; -->
       速度：{{(totalCount/(Math.max(1,totalMilliseconds)/600)).toFixed(2)}} 字/分钟
     </span>
   </div>
@@ -89,6 +89,11 @@ export default {
       return this.correctCount == this.code.length;
     }
   },
+  watch: {
+    code(newCode) {
+      this.resetInput();
+    }
+  },
   methods: {
     escapeHtml(unsafe) {
       return unsafe
@@ -106,6 +111,10 @@ export default {
       }
     },
     startTiming() {
+      if(this.code == '尚未选择关卡。') {
+        alert("您尚未选择关卡，无法开始。");
+        return;
+      }
       if (this.timerId === null) {
         this.timerId = setInterval(() => {
           this.totalMilliseconds += 1;
@@ -126,6 +135,8 @@ export default {
         this.timerId = null;
       }
       this.input = '';
+      this.totalCount = 0;
+      this.correctCount = 0;
       this.totalMilliseconds = 0;
       this.inputDisabled = true;
     }
@@ -159,7 +170,7 @@ export default {
   }
   .statinfo {
     margin-left: 3%;
-    font-size: 15px; 
+    font-size: 16px; 
   }
   .title {
     margin-bottom: 10px;

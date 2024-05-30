@@ -1,5 +1,6 @@
 <template>
     <h1>码上速成 Code Speed-Up</h1>
+    <CodeLoader @code="code = $event"/>
     <CodeInput :code="code"/>
     <div class="m5">
         <VirtualKeyboard/>
@@ -9,17 +10,17 @@
 <script>
 import CodeInput from './CodeInput.vue';
 import VirtualKeyboard from './VirtualKeyboard.vue';
-import KeyboardSample from './KeyboardSample.vue';
+import CodeLoader from './CodeLoader.vue';
 
 export default {
   components: {
     CodeInput,
     VirtualKeyboard,
-    KeyboardSample
+    CodeLoader
   },
   data() {
     return {
-        code: '#include <bits/stdc++.h>\nusing namespace std;'
+        code: '尚未选择关卡。'
     }
   }
 }
