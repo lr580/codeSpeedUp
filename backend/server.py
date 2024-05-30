@@ -37,4 +37,4 @@ def getAllLevels(): # 因为关卡数据量少，就这样做了，关卡多再�
 # 以后再增加一关一关的 desc 和代码文本的 get 接口
 
 if __name__ == '__main__':
-    uvicorn.run(app, host='0.0.0.0', port=configs['port'], reload=True)
+    uvicorn.run(app, host='0.0.0.0', port=configs['port'])

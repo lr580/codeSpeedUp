@@ -1,12 +1,12 @@
 <template>
   <div class="topper">
-    <el-button-group class="buttongroup">
+    <el-button-group>
       <el-button round type="success" @click="startTiming" :disabled="timerId !== null">开始</el-button>
       <el-button round type="warning" @click="pauseTiming" :disabled="timerId === null">暂停</el-button>
       <el-button round type="danger" @click="resetInput">重置</el-button>
     </el-button-group>
     <span class="statinfo">
-      总用时：{{Math.floor(totalMilliseconds/10)}}.{{totalMilliseconds%10}} s &nbsp;
+      总用时：<span v-if="totalMilliseconds>=600">{{Math.floor(totalMilliseconds/600)}}分</span>{{Math.floor(totalMilliseconds/10%60)}}.{{totalMilliseconds%10}}秒 &nbsp;
       进度：{{correctCount}} / {{code.length}} &nbsp;
       <!-- 正确率：{{Math.floor(correctCount/Math.max(1,totalCount)*100)}}% &nbsp; -->
       速度：{{(totalCount/(Math.max(1,totalMilliseconds)/600)).toFixed(2)}} 字/分钟
@@ -16,28 +16,30 @@
     <el-col :span="12">输入区</el-col>
     <el-col :span="12">参考代码</el-col>
   </el-row>
-  <el-row class="code-editor">
-    <el-col :span="1">
-      <LineNumbers :numRows="numRows" />
-    </el-col>
-    <el-col :span="11">
-      <el-input
-        type="textarea"
-        v-model="input"
-        @input="handleInput"
-        :rows="numRows"
-        placeholder="请输入代码..."
-        :disabled="inputDisabled"
-        @paste.prevent=""
-      </el-input>
-    </el-col>
-    <el-col :span="1">
-      <LineNumbers :numRows="numRows" />
-    </el-col>
-    <el-col :span="11">
-      <pre v-html="formattedCode" class="code-display"></pre>
-    </el-col>
-  </el-row>
+  <el-scrollbar height="290px">
+    <el-row class="code-editor">
+      <el-col :span="1">
+        <LineNumbers :numRows="numRows" />
+      </el-col>
+      <el-col :span="11">
+        <textarea
+          v-model="input"
+          @input="handleInput"
+          :rows="numRows"
+          placeholder="请输入代码..."
+          :disabled="inputDisabled"
+          @paste.prevent=""
+          class="codeinput">
+        </textarea>
+      </el-col>
+      <el-col :span="1">
+        <LineNumbers :numRows="numRows" />
+      </el-col>
+      <el-col :span="11">
+        <pre v-html="formattedCode" class="code-display"></pre>
+      </el-col>
+    </el-row>
+  </el-scrollbar>
   <div v-if="finishCoding" class="finishText">
     <span>你过关！</span>
   </div>
@@ -145,41 +147,46 @@ export default {
 </script>
 
 <style scoped>
-  .code-editor {
-    font-family: 'Fira Code', monospace; 
-    font-size: 16px; 
-    line-height: 1.5em;
-    padding-left: 5%;
-    padding-right: 5%;
-  }
-  .el-input {
-    margin-right: 10px;
-  }
-  .code-display {
-    background-color: #f4f4f4;
-    margin-top: 0;
-    text-align: left;
-  }
-  .el-input .el-textarea__inner {
-    border: none; 
-  }
-  .topper {
-    margin-bottom: 10px;
-  }
-  .buttongroup {
-  }
-  .statinfo {
-    margin-left: 3%;
-    font-size: 16px; 
-  }
-  .title {
-    margin-bottom: 10px;
-    font-size: 20px;
-    font-weight: 800;
-  }
-  .finishText span {
-    font-size: 18px;
-  }
+.code-editor {
+  font-family: 'Fira Code', monospace; 
+  font-size: 16px; 
+  line-height: 1.5em;
+  padding-left: 5%;
+  padding-right: 5%;
+}
+textarea.codeinput {
+  font-family: 'Fira Code', monospace; 
+  font-size: 16px; 
+  line-height: 1.5em;
+  width: 100%;                /* 确保填满容器 */
+  height: 100%;               /* 高度自适应 */
+  outline: none;              /* 点击时无轮廓线 */
+  resize: none;               /* 禁止用户调整大小 */
+  box-sizing: border-box;     /* 盒模型调整，包含内边距和边框 */
+  overflow: auto;             /* 超出滚动 */
+}
+.code-display {
+  background-color: #f4f4f4;
+  margin-top: 0;
+  text-align: left;
+  white-space: pre-wrap;
+  word-wrap: break-word;
+}
+.topper {
+  margin-bottom: 10px;
+}
+.statinfo {
+  margin-left: 3%;
+  font-size: 16px; 
+}
+.title {
+  margin-bottom: 10px;
+  font-size: 20px;
+  font-weight: 800;
+}
+.finishText span {
+  font-size: 18px;
+}
 </style>
 
 <style>

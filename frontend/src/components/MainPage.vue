@@ -2,7 +2,7 @@
     <h1>码上速成 Code Speed-Up</h1>
     <CodeLoader @code="code = $event"/>
     <CodeInput :code="code"/>
-    <div class="m5">
+    <div class="m5 mt">
         <VirtualKeyboard/>
     </div>
 </template>
@@ -28,9 +28,12 @@ export default {
 
 <style scoped>
 h1 {
-    margin-top: -30px;
+  margin-top: -30px;
 }
 .m5 {
-    margin: 0 5%;
+  margin: 0 5%;
+}
+.mt {
+  margin-top: 5px;
 }
 </style>
