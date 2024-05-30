@@ -28,6 +28,7 @@
         :rows="numRows"
         placeholder="请输入代码..."
         :disabled="inputDisabled"
+        @paste.prevent=""
       </el-input>
     </el-col>
     <el-col :span="1">

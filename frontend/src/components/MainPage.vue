@@ -1,7 +1,6 @@
 <template>
     <h1>码上速成 Code Speed-Up</h1>
     <CodeInput :code="code"/>
-    <!-- <KeyboardSample /> -->
     <div class="m5">
         <VirtualKeyboard/>
     </div>

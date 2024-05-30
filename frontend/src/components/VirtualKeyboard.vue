@@ -7,7 +7,7 @@ import Keyboard from "simple-keyboard";
 import "simple-keyboard/build/css/index.css";
 
 export default {
-  name: "SimpleKeyboard",
+  name: "VirtualKeyboard",
   props: {
     keyboardClass: {
       default: "simple-keyboard",
@@ -25,7 +25,7 @@ export default {
             '{tab} q w e r t y u i o p [ ] \\',
             '{lock} a s d f g h j k l ; \' {enter}',
             '{shift} z x c v b n m , . / {shift}',
-            '{space}'
+            '{ctrl} {win} {alt} {space} {alt} {win} {ctrl}'
           ]
         }
       }
@@ -46,7 +46,7 @@ export default {
         '{bksp}': "Backspace",
         '{lock}': "Caps Lock",
         '{enter}': "Enter", '{shift}' : "Shift",
-        '{space}': "Space", '{tab}':'Tab',
+        '{space}': "Space", '{tab}':'Tab', '{ctrl}': "Ctrl",'{alt}': "Alt",'{win}': "Win",
         '1': '1 !', '2': '2 @', '3': '3 #', '4': '4 $', '5': '5 %',
         '6': '6 ^', '7': '7 &', '8': '8 *', '9': '9 (', '0': '0 )',
         '-': '- _', '=': '= +',
@@ -59,9 +59,7 @@ export default {
         'p': 'P', 'q': 'Q', 'r': 'R', 's': 'S', 't': 'T',
         'u': 'U', 'v': 'V', 'w': 'W', 'x': 'X', 'y': 'Y', 'z': 'Z'
       },
-      buttonTheme: [
-        { class: "highlight", buttons: " " } // 初始无高亮按钮
-      ]
+      buttonTheme: this.blankButtonTheme()
     });
     // 使用 $nextTick 确保键盘实例完全初始化后再设置事件监听
     this.$nextTick(() => {
@@ -69,29 +67,42 @@ export default {
     });
   },
   methods: {
+    blankButtonTheme() {
+      return [
+        { class: "highlight", buttons: " " },
+        { class: "spacebar", buttons: "{space}" },
+        { class: "small-btn", buttons: "{shift} {ctrl} {alt} {win} {tab} {lock} {bksp} {enter}" }
+      ]
+    },
+    highlightedButtonTheme(button) {
+      return [
+        { class: "highlight", buttons: button },
+        { class: "spacebar", buttons: "{space}" },
+        { class: "small-btn", buttons: "{shift} {ctrl} {alt} {win} {tab} {lock} {bksp} {enter}" }
+      ]
+    },
     onChange(input) {
       this.$emit("onChange", input);
     },
     onKeyPress(button) {
       this.handleKeyPress(button); // 这里可能是你需要添加自定义逻辑的地方
-      if (button === "{shift}" || button === "{lock}") this.handleShift();
+      // 本程序不需要切换键盘的显示
+      // if (button === "{shift}" || button === "{lock}") this.handleShift();
       this.$emit("onKeyPress", button);
     },
     handleKeyPress(button) {
       // 更新按键高亮
       this.keyboard.setOptions({
-        buttonTheme: [
-          { class: "highlight", buttons: button }
-        ]
+        buttonTheme: this.highlightedButtonTheme(button)
       });
       // Remove highlight after some time
       setTimeout(() => {
         this.keyboard.setOptions({
-          buttonTheme: [{ class: "highlight", buttons: " " }]
+          buttonTheme: this.blankButtonTheme()
         });
       }, 200);
     },
-    handleShift() {
+    handleShift() { // 本程序不需要切换键盘的显示
       let currentLayout = this.keyboard.options.layoutName;
       let shiftToggle = currentLayout === "default" ? "default" : "default"; // 移除了 shift (否则?前是shift)
 
@@ -131,20 +142,21 @@ export default {
         "NumLock": "{numlock}", "NumpadDivide": "/", "NumpadMultiply": "*", "NumpadSubtract": "-", 
         "NumpadAdd": "+", "NumpadEnter": "{enter}", "Numpad1": "1", "Numpad2": "2", "Numpad3": "3",
         "Numpad4": "4", "Numpad5": "5", "Numpad6": "6", "Numpad7": "7", "Numpad8": "8", 
-        "Numpad9": "9", "Numpad0": "0", "NumpadDecimal": ".", "Backquote": "` ~"
+        "Numpad9": "9", "Numpad0": "0", "NumpadDecimal": ".", "Backquote": "` ~",
+        "ControlLeft": "{ctrl}", "ControlRight": "{ctrl}",
+        "AltLeft": "{alt}", "AltRight": "{alt}",
+        "MetaLeft": "{win}", "MetaRight": "{win}"
       };
       return mapping[code];
     },
     highlightKey(button) {
       // 更新按键高亮
       this.keyboard.setOptions({
-        buttonTheme: [
-          { class: "highlight", buttons: button }
-        ]
+        buttonTheme: this.highlightedButtonTheme(button)
       });
       setTimeout(() => {
         this.keyboard.setOptions({
-          buttonTheme: [{ class: "highlight", buttons: " " }]
+          buttonTheme: this.blankButtonTheme()
         });
       }, 200);
     }
@@ -170,6 +182,14 @@ export default {
 .hg-standardBtn, .hg-functionBtn {
   height: 2rem !important;
   font-size: 0.65rem;
+}
+
+.spacebar {
+  width: 50%; /* 空格键占据50%的宽度 */
+}
+
+.small-btn {
+  width: 6%; /* 其他控制键的宽度较小 */
 }
 
 </style>
