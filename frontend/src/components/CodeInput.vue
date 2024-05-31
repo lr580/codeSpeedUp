@@ -16,30 +16,31 @@
     <el-col :span="12">输入区</el-col>
     <el-col :span="12">参考代码</el-col>
   </el-row>
-  <el-scrollbar height="290px">
-    <el-row class="code-editor">
-      <el-col :span="1">
-        <LineNumbers :numRows="numRows" />
-      </el-col>
-      <el-col :span="11">
-        <textarea
-          v-model="input"
-          @input="handleInput"
-          :rows="numRows"
-          placeholder="请输入代码..."
-          :disabled="inputDisabled"
-          @paste.prevent=""
-          class="codeinput">
-        </textarea>
-      </el-col>
-      <el-col :span="1">
-        <LineNumbers :numRows="numRows" />
-      </el-col>
-      <el-col :span="11">
-        <pre v-html="formattedCode" class="code-display"></pre>
-      </el-col>
-    </el-row>
-  </el-scrollbar>
+
+  <el-row class="code-editor">
+    <el-col :span="1">
+      <LineNumbers :numRows="numRows" ref="line1"/>
+    </el-col>
+    <el-col :span="11">
+      <textarea
+        ref="textarea"
+        v-model="input"
+        @input="handleInput"
+        :rows="numRows"
+        placeholder="请输入代码..."
+        :disabled="inputDisabled"
+        @paste.prevent=""
+        class="codeinput">
+      </textarea>
+    </el-col>
+    <el-col :span="1">
+      <LineNumbers :numRows="numRows" ref="line2"/>
+    </el-col>
+    <el-col :span="11">
+      <pre v-html="formattedCode" ref="pre" class="code-display"></pre>
+    </el-col>
+  </el-row>
+
   <div v-if="finishCoding" class="finishText">
     <span>你过关！</span>
   </div>
@@ -141,7 +142,29 @@ export default {
       this.correctCount = 0;
       this.totalMilliseconds = 0;
       this.inputDisabled = true;
-    }
+    },
+    //疑似没用
+    syncScroll() {
+      const lineNumberDiv = this.$refs.line1;
+      const codeInput = this.$refs.textarea;
+      if (lineNumberDiv && codeInput) {
+        lineNumberDiv.scrollTop = codeInput.scrollTop;
+      }
+    },
+    syncScroll2() {
+      const lineNumberDiv = this.$refs.line2;
+      const codeInput = this.$refs.pre;
+      if (lineNumberDiv && codeInput) {
+        lineNumberDiv.scrollTop = codeInput.scrollTop;
+      }
+    },
+  },
+  mounted() {
+    this.$refs.textarea.addEventListener('scroll', this.syncScroll);
+    this.$refs.pre.addEventListener('scroll', this.syncScroll2);
+    // this.$nextTick(() => {
+    // this.$refs.pre.addEventListener('scroll', this.syncScroll);
+    // });
   }
 };
 </script>
@@ -169,8 +192,18 @@ textarea.codeinput {
   background-color: #f4f4f4;
   margin-top: 0;
   text-align: left;
-  white-space: pre-wrap;
-  word-wrap: break-word;
+  /*white-space: pre-wrap;
+  word-wrap: break-word;*/
+}
+textarea.codeinput, pre.code-display {
+  white-space: pre;       /* 保持空格和避免自动换行 */
+  overflow-x: auto;       /* 内容过长时显示横向滚动条 */
+  height: auto;
+  padding: 4px;
+  border: 1px solid #ccc;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  max-height: 270px;
+  overflow-y: auto; 
 }
 .topper {
   margin-bottom: 10px;

@@ -24,6 +24,8 @@ export default {
   padding-left: 8px;
   user-select: none; /* Prevent user selection of line numbers */
   color: #888;
+  max-height: 270px;
+  overflow-y: auto;
 }
 
 .line-number {

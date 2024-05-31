@@ -63,3 +63,10 @@ python server.py # 运行服务器后端
 
 
 
+## 未来改进
+
+欢迎就包括但不限于下面的方面提交 PR 或宝贵的建议：
+
+1. 针对不同语言更流畅的输入 (如自动空格到上一行位置，打左括号自动补右)
+2. 针对不同语言的语法高亮 (如基于 `highlight.js` 的实现)
+3. 单行长度太大时自动折叠到下一行而行号留空不变 (如基于 `monaco`, `codemirror`[参考](https://github.com/yyym-y/yyym-y.github.io/blob/master/util/codeShow.html) 等)
