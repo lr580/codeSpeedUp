@@ -1,15 +1,26 @@
 <template>
   <div class="footer-bar">
     <div class="footer-content">
-      <a :href="this.config.icpHref">{{this.config.icp}}</a>
-      <span class="right-content">这是一个居右的内容</span>
+      <a :href="this.config.icpHref">{{ this.config.icp }}</a>
+      <span class="right-content">
+        <a @click="gameRule" class="mr">游戏规则</a>
+        <a @click="about">关于</a>
+      </span>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  inject: ['config'],
+  inject: ["config"],
+  methods: {
+    gameRule() {
+        alert("TODO");
+    },
+    about() {
+        alert("欢迎查看源码 https://github.com/lr580/codeSpeedUp")
+    }
+  },
 };
 </script>
 
@@ -30,6 +41,7 @@ export default {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  padding-left: 10px;
 }
 
 .footer-content span {
@@ -42,11 +54,15 @@ export default {
 }
 
 a {
-    color: black;
-    text-decoration: none;
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 16px;
 }
 a:hover {
-    text-decoration: underline;
+  text-decoration: underline;
 }
-
+.mr {
+    margin-right: 10px;
+}
 </style>
