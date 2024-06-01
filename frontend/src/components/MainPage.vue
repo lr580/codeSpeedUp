@@ -1,5 +1,4 @@
 <template>
-    <h1>码上速成 Code Speed-Up</h1>
     <CodeLoader @code="code = $event"
     @level="level = $event"
     @levelType="levelType = $event" />
@@ -11,6 +10,7 @@
     <div class="m5 mt">
         <VirtualKeyboard/>
     </div>
+    <FootBar />
 </template>
 
 <script>
@@ -18,13 +18,15 @@ import CodeInput from './CodeInput.vue';
 import VirtualKeyboard from './VirtualKeyboard.vue';
 import CodeLoader from './CodeLoader.vue';
 import ScoreSubmit from './ScoreSubmit.vue';
+import FootBar from './FootBar.vue';
 
 export default {
   components: {
     CodeInput,
     VirtualKeyboard,
     CodeLoader,
-    ScoreSubmit
+    ScoreSubmit,
+    FootBar
   },
   data() {
     return {
@@ -39,9 +41,6 @@ export default {
 </script>
 
 <style scoped>
-h1 {
-  margin-top: -30px;
-}
 .m5 {
   margin: 0 5%;
 }

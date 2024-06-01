@@ -16,12 +16,16 @@
                 <span class="level-description">{{ value }}</span> <!--这里的value是for那个不是:value-->
             </el-option>
         </el-select>
-        <el-text v-if="selectedLevelType && selectedLevel" class="ml"><b>关卡描述：</b>{{levelDesc[selectedLevelType][selectedLevel]}}</el-text>
+        <span v-if="selectedLevelType && selectedLevel">
+            <el-text class="ml"><b>关卡描述：</b>{{levelDesc[selectedLevelType][selectedLevel]}}&nbsp;</el-text>
+            <el-button circle icon="Histogram" title="查看排行榜" @click="viewScoreboard"/>
+        </span>
     </div>
 </template>
 <script>
 import axios from 'axios';
 import { ElMessage } from 'element-plus';
+import { Histogram } from "@element-plus/icons-vue";
 export default {
     data() {
         return {
@@ -30,7 +34,7 @@ export default {
             selectedLevelType: '',
             selectedLevel: ''
         }
-    },
+    }, 
     inject: ['config'],
     methods: {
         async getLevelDesc() {
@@ -38,7 +42,7 @@ export default {
                 const response = await axios.get(this.config.serverURL + '/getLevelDesc');
                 this.levelDesc = response.data;
             } catch (error) {
-                console.error('获取关卡信息失败:', error)
+                console.error('获取关卡信息失败:', error);
             }
         },
         async getLevelCodes() {
@@ -48,12 +52,16 @@ export default {
             } catch (error) {
                 console.error('获取关卡代码失败:', error);
                 ElMessage({
-                    message: '获取关卡代码失败,请检查网络',
+                    message: '获取数据失败,请检查网络',
                     type: 'error',
                     duration: 3000,
                     showClose: true
                 });
             }
+        },
+        viewScoreboard() {
+            const url = `/scoreboard?level=${this.selectedLevel}&levelType=${this.selectedLevelType}`;
+            window.open(url, "_blank");
         }
     },
     mounted() {

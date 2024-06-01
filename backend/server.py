@@ -1,4 +1,4 @@
-import yaml, os, uvicorn, glob
+import yaml, os, uvicorn, glob, datetime
 from fastapi import FastAPI
 from pydantic import BaseModel
 from fastapi.middleware.cors import CORSMiddleware
@@ -62,6 +62,34 @@ def submitScore(data : SubmitScoreData):
     with open(levelPath, 'a', encoding='utf8') as f:
         f.write(dataLine)
     return {"message":"ok"}
+
+@app.get('/getRank/{levelType}/{level}')
+def getRank(levelType:str, level:str):
+    topicPath = os.path.join(path_rank, levelType)
+    levelPath = os.path.join(topicPath, level+'.txt')
+    levelCodePath = os.path.join(path_level, levelType, level)
+    try:
+        with open(levelCodePath, 'r', encoding='utf8') as f:
+            length = len(f.read().strip())
+    except:
+        return ''
+    try:
+        with open(levelPath, 'r', encoding='utf8') as f:
+            dataRaw = f.readlines()
+    except:
+        dataRaw = []
+    data = []
+    for line in dataRaw:
+        parts = line.split()
+        date_str = parts[1]
+        date_obj = datetime.datetime.strptime(date_str, "%Y-%m-%d-%H-%M-%S")
+        date_formatted = date_obj.strftime("%Y年%m月%d日 %H:%M:%S")
+        number = int(parts[2])
+        timePretty = '%.1f秒'%(number/10) if number<600 else '%d分%.1f秒'%(number//600,number%600/10)
+        speed = '%.2f'%(length / (number / 600))
+        data.append({'name':parts[0], 'date':date_formatted, 'time':number, 'speed':speed,'timePretty':timePretty})
+    data.sort(key=lambda x:x["time"])
+    return data
 
 if __name__ == '__main__':
     uvicorn.run(app, host='0.0.0.0', port=configs['port'])

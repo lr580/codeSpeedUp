@@ -81,7 +81,8 @@ export default {
             });
         },
         showRank() {
-            alert("TODO");
+            const url = `/scoreboard?level=${this.level}&levelType=${this.levelType}`;
+            window.open(url, "_blank");
         }
     }
 }

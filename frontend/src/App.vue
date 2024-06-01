@@ -1,14 +1,9 @@
 <template>
-  <MainPage/>
+  <h1>码上速成 Code Speed-Up</h1>
+  <router-view></router-view>
 </template>
-
-<script>
-import MainPage from './components/MainPage.vue'
-
-export default {
-  name: 'App',
-  components: {
-    MainPage
-  }
+<style scoped>
+h1 {
+  margin-top: -30px;
 }
-</script>
+</style>
