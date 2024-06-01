@@ -22,13 +22,14 @@ export default {
   text-align: right;
   padding-right: 8px;
   padding-left: 8px;
-  user-select: none; /* Prevent user selection of line numbers */
+  margin-top: 6px;
+  user-select: none; 
   color: #888;
   max-height: 270px;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 .line-number {
-  height: var(--line-height, 1.5em); /* Adjust line height to match your text area */
+  height: var(--line-height, 1.5em); 
 }
 </style>

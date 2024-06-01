@@ -21,6 +21,7 @@
 </template>
 <script>
 import axios from 'axios';
+import { ElMessage } from 'element-plus';
 export default {
     data() {
         return {
@@ -45,7 +46,13 @@ export default {
                 const response = await axios.get(this.config.serverURL + '/getAllLevels');
                 this.levelCodes = response.data;
             } catch (error) {
-                console.error('获取关卡代码失败:', error)
+                console.error('获取关卡代码失败:', error);
+                ElMessage({
+                    message: '获取关卡代码失败,请检查网络',
+                    type: 'error',
+                    duration: 3000,
+                    showClose: true
+                });
             }
         }
     },
@@ -54,9 +61,17 @@ export default {
         this.getLevelCodes();
     },
     watch:{
+        selectedLevelType(newVal) {
+            this.selectedLevel = '';
+            this.$emit('levelType', newVal);
+        },
         selectedLevel(newVal) {
-            let code = this.levelCodes[this.selectedLevelType][newVal];
+            let code = '尚未选择关卡。';
+            if(newVal) {
+                code = this.levelCodes[this.selectedLevelType][newVal];
+            }
             this.$emit('code', code);
+            this.$emit('level', newVal);
         }
     }
 }
@@ -81,9 +96,6 @@ export default {
 }
 .level-description {
     float: right;
-    font-size: 11px; /* 小字 */
-}
-.levelDesc { /* abandoned */
-    font-size: 16px;
+    font-size: 11px; 
 }
 </style>

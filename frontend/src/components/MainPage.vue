@@ -1,7 +1,13 @@
 <template>
     <h1>码上速成 Code Speed-Up</h1>
-    <CodeLoader @code="code = $event"/>
-    <CodeInput :code="code"/>
+    <CodeLoader @code="code = $event"
+    @level="level = $event"
+    @levelType="levelType = $event" />
+    <CodeInput :code="code"
+    @score="score = $event"
+    @finish="finish = $event" />
+    <ScoreSubmit :finish="finish" :score="score" 
+    :level="level" :levelType="levelType" />
     <div class="m5 mt">
         <VirtualKeyboard/>
     </div>
@@ -11,16 +17,22 @@
 import CodeInput from './CodeInput.vue';
 import VirtualKeyboard from './VirtualKeyboard.vue';
 import CodeLoader from './CodeLoader.vue';
+import ScoreSubmit from './ScoreSubmit.vue';
 
 export default {
   components: {
     CodeInput,
     VirtualKeyboard,
-    CodeLoader
+    CodeLoader,
+    ScoreSubmit
   },
   data() {
     return {
-        code: '尚未选择关卡。'
+        code: '尚未选择关卡。',
+        level: '',
+        levelType: '',
+        score: 0,
+        finish: false,
     }
   }
 }

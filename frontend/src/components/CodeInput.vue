@@ -1,7 +1,7 @@
 <template>
   <div class="topper">
     <el-button-group>
-      <el-button round type="success" @click="startTiming" :disabled="timerId !== null">开始</el-button>
+      <el-button round type="success" @click="startTiming" :disabled="timerId !== null || finishCoding">开始</el-button>
       <el-button round type="warning" @click="pauseTiming" :disabled="timerId === null">暂停</el-button>
       <el-button round type="danger" @click="resetInput">重置</el-button>
     </el-button-group>
@@ -19,12 +19,11 @@
 
   <el-row class="code-editor">
     <el-col :span="1">
-      <LineNumbers :numRows="numRows" ref="line1"/>
+      <LineNumbers :numRows="numRows"/>
     </el-col>
     <el-col :span="11">
       <textarea
-        ref="textarea"
-        v-model="input"
+        v-model="input" ref="textarea" 
         @input="handleInput"
         :rows="numRows"
         placeholder="请输入代码..."
@@ -34,16 +33,12 @@
       </textarea>
     </el-col>
     <el-col :span="1">
-      <LineNumbers :numRows="numRows" ref="line2"/>
+      <LineNumbers :numRows="numRows"/>
     </el-col>
     <el-col :span="11">
-      <pre v-html="formattedCode" ref="pre" class="code-display"></pre>
+      <pre v-html="formattedCode" class="code-display"></pre>
     </el-col>
   </el-row>
-
-  <div v-if="finishCoding" class="finishText">
-    <span>你过关！</span>
-  </div>
 </template>
 
 <script>
@@ -95,6 +90,10 @@ export default {
   watch: {
     code(newCode) {
       this.resetInput();
+    },
+    finishCoding(newVal) {
+      this.$emit('finish', newVal);
+      this.$emit('score', this.totalMilliseconds);
     }
   },
   methods: {
@@ -113,6 +112,9 @@ export default {
         this.pauseTiming();
       }
     },
+    focusOnTextarea() {
+      this.$refs.textarea.focus();
+    },
     startTiming() {
       if(this.code == '尚未选择关卡。') {
         alert("您尚未选择关卡，无法开始。");
@@ -123,6 +125,9 @@ export default {
           this.totalMilliseconds += 1;
         }, 100);
         this.inputDisabled = false;
+        this.$nextTick(() => {
+          this.focusOnTextarea();
+        });
       }
     },
     pauseTiming() {
@@ -143,28 +148,10 @@ export default {
       this.totalMilliseconds = 0;
       this.inputDisabled = true;
     },
-    //疑似没用
-    syncScroll() {
-      const lineNumberDiv = this.$refs.line1;
-      const codeInput = this.$refs.textarea;
-      if (lineNumberDiv && codeInput) {
-        lineNumberDiv.scrollTop = codeInput.scrollTop;
-      }
-    },
-    syncScroll2() {
-      const lineNumberDiv = this.$refs.line2;
-      const codeInput = this.$refs.pre;
-      if (lineNumberDiv && codeInput) {
-        lineNumberDiv.scrollTop = codeInput.scrollTop;
-      }
-    },
-  },
-  mounted() {
-    this.$refs.textarea.addEventListener('scroll', this.syncScroll);
-    this.$refs.pre.addEventListener('scroll', this.syncScroll2);
-    // this.$nextTick(() => {
-    // this.$refs.pre.addEventListener('scroll', this.syncScroll);
-    // });
+    handleScroll() {
+      const top = this.$refs.textarea.scrollTop;
+      this.$refs.line1.syncScroll(top);
+    }
   }
 };
 </script>

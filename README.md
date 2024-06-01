@@ -61,7 +61,9 @@ python server.py # 运行服务器后端
 
 ### 排行数据
 
+因为数据量少，懒得用数据库了，直接使用文本来存储每个关卡的排行数据。
 
+使用 `.txt` 存储每个提交数据，在 1e5 数据内都表现理论良好。存储路径为 `data/rank/关卡类型名/关卡名.txt`。(如 `data/rank/Python语法/HelloWorld.py.txt`)
 
 ## 未来改进
 
