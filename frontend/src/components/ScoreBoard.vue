@@ -4,10 +4,11 @@
     </div>
     <div v-if="data">
         <el-table :data="data" height="520px" table-layout="auto">
-            <el-table-column prop="name" sortable label="姓名" min-width="200" align="center"/>
-            <el-table-column prop="timePretty" label="用时" min-width="80" align="center"/>
-            <el-table-column prop="speed" sortable label="速度(字符/分钟)" min-width="150" align="center"/>
-            <el-table-column prop="date" sortable label="提交时间" min-width="260" align="center"/>
+            <el-table-column prop="rank" sortable label="排名"  align="center"/>
+            <el-table-column prop="name" sortable label="姓名"  align="center"/>
+            <el-table-column prop="timePretty" label="用时"  align="center"/>
+            <el-table-column prop="speed" sortable label="速度(字符/分钟)"  align="center"/>
+            <el-table-column prop="date" sortable label="提交时间"  align="center"/>
         </el-table>
     </div>
     <div v-else> 暂无数据。</div>

@@ -6,7 +6,7 @@
         <span v-else>
             <el-text class="ml">输入名称：</el-text>
             <el-input v-model="name" placeholder="请输入名称" clearable 
-            minlength=1 maxlength=20 show-word-limit
+            minlength=1 maxlength=20 v-no-whitespace show-word-limit
             :style="{ width: '260px' }" />
             <el-button type='primary' plain @click="submit" class="ml">提交</el-button>
         </span>
@@ -28,6 +28,16 @@ export default {
             showedSubmit: false,
             submitted: false,
             name: '',
+        }
+    },
+    directives: {
+        noWhitespace: {
+            beforeMount(el, binding, vnode) {
+                el.addEventListener('input', function(e) {
+                    e.target.value = e.target.value.replace(/\s/g, ''); // 移除所有类型的空格
+                    vnode.component?.emit('update:modelValue', e.target.value); // 强制更新v-model
+                });
+            }
         }
     },
     watch:{

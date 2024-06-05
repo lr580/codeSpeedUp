@@ -89,6 +89,13 @@ def getRank(levelType:str, level:str):
         speed = '%.2f'%(length / (number / 600))
         data.append({'name':parts[0], 'date':date_formatted, 'time':number, 'speed':speed,'timePretty':timePretty})
     data.sort(key=lambda x:x["time"])
+    prvTime = prvRank = -1
+    for i in range(len(data)):
+        if data[i]['time'] == prvTime:
+            data[i]['rank'] = prvRank
+        else:
+            prvTime = data[i]['time']
+            prvRank = data[i]['rank'] = i+1
     return data
 
 if __name__ == '__main__':
