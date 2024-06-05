@@ -8,10 +8,10 @@
   :wider="!keyboardVisible" />
   <ScoreSubmit :finish="finish" :score="score" 
   :level="level" :levelType="levelType" />
-  <div v-if="keyboardVisible" class="keyboard-container">
+  <div v-if="keyboardVisible" class="m5 mt">
     <VirtualKeyboard />
   </div>
-  <FootBar @keyboardOnShow="keyboardVisible=$event" />
+  <FootBar @keyboardOnShow="keyboardVisible=$event"/>
 </template>
 
 <script>
