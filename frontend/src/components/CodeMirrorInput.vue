@@ -1,9 +1,10 @@
 <template>
   <codemirror
-    v-model="code"
+    v-model="code" ref="codemirror" 
     class="codemirror"
     placeholder="请输入代码..."
     :indent-with-tab="true"
+    :tabSize="4"
     :extensions="extensions"
   />
 </template>
@@ -42,10 +43,21 @@ export default {
       }
       return extensions;
     },
+    clear() { // 供父组件调用，下同
+      this.code = '';
+    },
+    focus() {
+      // TODO
+      // console.log(this.$refs.codemirror.$el);
+      // this.$refs.codemirror.$el.focus();
+    }
   },
   watch: {
     language(newLang) {
       this.extensions = this.setupExtensions(newLang);
+    },
+    code(newCode) {
+      this.$emit("code", newCode);
     },
   },
   components: {

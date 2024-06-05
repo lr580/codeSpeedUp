@@ -10,11 +10,7 @@ const routes = [
     },
     {
         path: '/ide',
-        component: () => import("./components/CodeMirrorTester.vue")
-    },
-    {
-        path: '/ide2',
-        component: () => import("./components/tester2.vue")
+        component: () => import("./components/CodeMirrorInput.vue")
     }
 ];
 const router = createRouter({

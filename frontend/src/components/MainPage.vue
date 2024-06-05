@@ -2,7 +2,7 @@
     <CodeLoader @code="code = $event"
     @level="level = $event"
     @levelType="levelType = $event" />
-    <CodeInput :code="code"
+    <CodeInput :code="code" :level="level"  
     @score="score = $event"
     @finish="finish = $event" />
     <ScoreSubmit :finish="finish" :score="score" 

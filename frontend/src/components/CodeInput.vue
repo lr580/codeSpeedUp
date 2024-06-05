@@ -17,13 +17,13 @@
     <el-col :span="12">参考代码</el-col>
   </el-row>
 
-  <el-scrollbar height="250px">
+  <el-scrollbar :height="scrollBarHeight">
     <el-row class="code-editor">
-      <el-col :span="1">
+       <!-- <el-col :span="1">
         <LineNumbers :numRows="numRows"/>
       </el-col>
       <el-col :span="11">
-        <textarea
+       <textarea
           v-model="input" ref="textarea" 
           @input="handleInput"
           :rows="numRows"
@@ -31,7 +31,13 @@
           :disabled="inputDisabled"
           @paste.prevent=""
           class="codeinput">
-        </textarea>
+        </textarea> 
+      </el-col>-->
+      <el-col :span="12">
+        <CodeMirrorInput :language="level" 
+        :disabled="inputDisabled"
+        @paste.prevent="" ref="textarea" 
+        @code="input = $event"/>
       </el-col>
       <el-col :span="1">
         <LineNumbers :numRows="numRows"/>
@@ -46,24 +52,24 @@
 <script>
 import { ElInput, ElRow, ElCol } from 'element-plus';
 import LineNumbers from './LineNumbers.vue';
+import CodeMirrorInput from './CodeMirrorInput.vue'
 
 export default {
   components: {
     ElInput,
     ElRow,
     ElCol,
-    LineNumbers
+    LineNumbers,
+    CodeMirrorInput
   },
-  props: ['code'],
+  props: ['code', 'level'],
   data() {
     return {
       input: '',
       inputDisabled: true,
       hasStarted: false,
-      correctCount: 0,
-      totalCount: 0,
       timerId: null,
-      totalMilliseconds: 0
+      totalMilliseconds: 0,
     };
   },
   computed: {
@@ -87,6 +93,15 @@ export default {
     },
     finishCoding() {
       return this.correctCount == this.code.length;
+    },
+    correctCount() {
+      return this.input.split('').filter((char, index) => char === this.code[index]).length;
+    },
+    totalCount() {
+      return this.input.length;
+    },
+    scrollBarHeight() {
+      return this.finishCoding ? 210 : 255;
     }
   },
   watch: {
@@ -96,6 +111,9 @@ export default {
     finishCoding(newVal) {
       this.$emit('finish', newVal);
       this.$emit('score', this.totalMilliseconds);
+    },
+    input(newInput) {
+      this.handleInput();
     }
   },
   methods: {
@@ -108,8 +126,6 @@ export default {
         .replace(/'/g, "&#039;");
     },
     handleInput() {
-      this.correctCount = this.input.split('').filter((char, index) => char === this.code[index]).length;
-      this.totalCount = this.input.length; // 输入总数
       if(this.correctCount == this.code.length) {
         this.pauseTiming();
       }
@@ -145,14 +161,11 @@ export default {
         this.timerId = null;
       }
       this.input = '';
+      this.$refs.textarea.clear();
       this.totalCount = 0;
       this.correctCount = 0;
       this.totalMilliseconds = 0;
       this.inputDisabled = true;
-    },
-    handleScroll() {
-      const top = this.$refs.textarea.scrollTop;
-      this.$refs.line1.syncScroll(top);
     }
   }
 };
