@@ -88,6 +88,8 @@ def getRank(levelType:str, level:str):
         number = int(parts[2])
         timePretty = '%.1f秒'%(number/10) if number<600 else '%d分%.1f秒'%(number//600,number%600/10)
         speed = '%.2f'%(length / (number / 600))
+        if float(speed) > 580: # 疑似作弊
+            continue
         data.append({'name':parts[0], 'date':date_formatted, 'time':number, 'speed':speed,'timePretty':timePretty})
     data.sort(key=lambda x:x["time"])
     prvTime = prvRank = -1

@@ -15,13 +15,22 @@ import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
 import { cpp } from "@codemirror/lang-cpp";
 import { java } from "@codemirror/lang-java";
-import { EditorView } from "@codemirror/view";
+import { EditorView, keymap } from "@codemirror/view";
+
+// 创建禁止复制的扩展
+const noCopyExtension = EditorView.domEventHandlers({
+  paste(event) {
+    event.preventDefault();
+    alert("复制功能已被禁用。");
+  }
+});
+
 export default {
   props: ["language"],
   data() {
     return {
       code: "",
-      baseExtensions: [EditorView.lineWrapping],
+      baseExtensions: [EditorView.lineWrapping, noCopyExtension],  
       extensions: [],
     };
   },
@@ -68,6 +77,7 @@ export default {
   },
 };
 </script>
+
 <style>
 .codemirror {
   font-size: 18px;

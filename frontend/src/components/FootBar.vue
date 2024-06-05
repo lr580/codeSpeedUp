@@ -3,6 +3,7 @@
     <div class="footer-content">
       <a :href="this.config.icpHref">{{ this.config.icp }}</a>
       <span class="right-content">
+        <a @click="toggleKeyboard"  class="mr"> {{keyboardOnShow ? '隐藏' : '显示'}}虚拟键盘</a>
         <a @click="ruleOnShow = true" class="mr">游戏规则</a>
         <a @click="aboutOnShow = true">关于</a>
       </span>
@@ -33,8 +34,15 @@ export default {
     return {
       aboutOnShow: false,
       ruleOnShow: false,
+      keyboardOnShow: true,
     };
   },
+  methods: {
+    toggleKeyboard() {
+      this.keyboardOnShow = !this.keyboardOnShow;
+      this.$emit("keyboardOnShow", this.keyboardOnShow);
+    },
+  }
 };
 </script>
 

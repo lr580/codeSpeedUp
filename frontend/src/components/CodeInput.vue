@@ -8,7 +8,6 @@
     <span class="statinfo">
       总用时：<span v-if="totalMilliseconds>=600">{{Math.floor(totalMilliseconds/600)}}分</span>{{Math.floor(totalMilliseconds/10%60)}}.{{totalMilliseconds%10}}秒 &nbsp;
       进度：{{correctCount}} / {{code.length}} &nbsp;
-      <!-- 正确率：{{Math.floor(correctCount/Math.max(1,totalCount)*100)}}% &nbsp; -->
       速度：{{(totalCount/(Math.max(1,totalMilliseconds)/600)).toFixed(2)}} 字/分钟
     </span>
   </div>
@@ -62,7 +61,7 @@ export default {
     LineNumbers,
     CodeMirrorInput
   },
-  props: ['code', 'level'],
+  props: ['code', 'level', 'wider'],
   data() {
     return {
       input: '',
@@ -101,7 +100,7 @@ export default {
       return this.input.length;
     },
     scrollBarHeight() {
-      return this.finishCoding ? 210 : 255;
+      return (this.finishCoding ? 210 : 255) + (this.wider ? 200 : 0);
     }
   },
   watch: {
