@@ -2,8 +2,8 @@
     <div class="main">
         <el-text>选择主题：</el-text>
         <el-select v-model="selectedLevelType" class="selector" placeholder='请选择主题'>
-            <el-option v-for="(value, key) in levelDesc" :key="key" :value="key">
-                {{ key }}
+            <el-option v-for="(value, key) in levelTypeList" :key="key" :value="key">
+                {{ value }}
             </el-option>
         </el-select>
         <el-text class='ml'>选择关卡：</el-text>
@@ -31,6 +31,7 @@ export default {
         return {
             levelDesc: {},
             levelCodes: {},
+            levelTypeList: {},
             selectedLevelType: '',
             selectedLevel: ''
         }
@@ -41,6 +42,14 @@ export default {
             try {
                 const response = await axios.get(this.config.serverURL + '/getLevelDesc');
                 this.levelDesc = response.data;
+            } catch (error) {
+                console.error('获取关卡信息失败:', error);
+            }
+        },
+        async getLevelTypeList() {
+            try {
+                const response = await axios.get(this.config.serverURL + '/getLevelTypeList');
+                this.levelTypeList = response.data;
             } catch (error) {
                 console.error('获取关卡信息失败:', error);
             }
@@ -66,6 +75,7 @@ export default {
     },
     mounted() {
         this.getLevelDesc();
+        this.getLevelTypeList();
         this.getLevelCodes();
     },
     watch:{

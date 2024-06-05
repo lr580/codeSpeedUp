@@ -14,6 +14,7 @@ import { Codemirror } from "vue-codemirror";
 import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
 import { cpp } from "@codemirror/lang-cpp";
+import { java } from "@codemirror/lang-java";
 import { EditorView } from "@codemirror/view";
 export default {
   props: ["language"],
@@ -31,15 +32,17 @@ export default {
     setupExtensions(language) {
       const extensions = [...this.baseExtensions];
       if(!language) {
-        extensions.push(cpp());
+        ;//pass
       } else if (language.endsWith(".js")) {
         extensions.push(javascript());
       } else if (language.endsWith(".py")) {
         extensions.push(python());
       } else if (language.endsWith(".cpp")) {
         extensions.push(cpp());
+      } else if (language.endsWith(".java")) {
+        extensions.push(java());
       } else {
-        extensions.push(python());
+        ;//pass
       }
       return extensions;
     },

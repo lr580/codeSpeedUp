@@ -1,6 +1,24 @@
 Python语法:
   HelloWorld.py: 输出一行语句
   AplusB.py: 两个变量相加
+  forElse.py: for-else求鸡兔同笼
 Cpp语法:
   HelloWorld.cpp: 输出一行语句
   StructSort.cpp: 结构体排序
+Python语句:
+  print.py: print语句常用用法
+  placeholder.py: 占位符常用语法
+  calc.py: 常用算术运算
+  for.py: 循环语句
+  listGen.py: 列表生成表达式
+  type.py: 类型判断相关语句
+  toint.py: 整数转换函数
+  tolist.py: 列表转换函数
+  set.py: 集合常用方法
+  str.py: 字符串常用方法
+  keyword.txt: 所有关键字
+  builtin.txt: 所有内置函数
+Java语法:
+  HelloWorld.java: 输出一行语句
+  Sumup.java: 求1+2+...+n
+  LeapYear.java: 闰年判断

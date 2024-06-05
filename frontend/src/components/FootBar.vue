@@ -10,7 +10,7 @@
   </div>
   <el-drawer v-model="aboutOnShow" direction="btt" title="关于" size="35%">
     <div class="drawerText">
-      <div>当前版本：v1.0.0 (最后更新时间：2024/6/5)</div>
+      <div>当前版本：v1.0.0 (最后更新时间：2024/6/6)</div>
       <div>作者：lr580</div>
       <div>联系方式(QQ)：2277379149</div>
       <div>源码：<a href="https://github.com/lr580/codeSpeedUp" target="_blank">https://github.com/lr580/codeSpeedUp</a></div>

@@ -28,12 +28,13 @@ def ping():
     return '码上速成后台服务器连接成功！'
 
 levelDesc = yaml.load(open(os.path.join(path_root, 'levelDesc.yml'), 'r', encoding='utf8'), Loader=yaml.FullLoader)
+levelTypeName = yaml.load(open(os.path.join(path_root, 'levelTypeName.yml'), 'r', encoding='utf8'), Loader=yaml.FullLoader)
 @app.get("/getLevelDesc")
 def getLevelDesc():
     return levelDesc
 @app.get("/getLevelTypeList")
-def getLevelTypeList(): # useless
-    return list(levelDesc.keys())
+def getLevelTypeList():
+    return levelTypeName
 @app.get("/getAllLevels")
 def getAllLevels(): # 因为关卡数据量少，就这样做了，关卡多再改吧
     result = {}

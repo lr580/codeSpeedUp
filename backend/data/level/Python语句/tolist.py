@@ -1,0 +1,8 @@
+range(10)
+list(range(3))
+range(2,20)
+range(1,100,3)
+list(range(21,11,-2))
+list(enumerate([1,3,5,7]))
+list(zip([(1,1),(2,2),(1,3)],(False,True,False),'def'))
+list(zip(*[((1,1), False,'d'),((2,2),True,'e'),((1,3),False,'f')]))

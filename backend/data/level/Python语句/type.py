@@ -1,0 +1,5 @@
+type(print)
+type(False)
+type(type(1))
+isinstance(7,int)
+isinstance('8',(str,list))
