@@ -7,6 +7,14 @@ const routes = [
     {
         path: '/scoreboard',
         component: () => import("./components/ScoreBoard.vue")
+    },
+    {
+        path: '/ide',
+        component: () => import("./components/CodeMirrorTester.vue")
+    },
+    {
+        path: '/ide2',
+        component: () => import("./components/tester2.vue")
     }
 ];
 const router = createRouter({

@@ -7,9 +7,7 @@
     @finish="finish = $event" />
     <ScoreSubmit :finish="finish" :score="score" 
     :level="level" :levelType="levelType" />
-    <div class="m5 mt">
-        <VirtualKeyboard/>
-    </div>
+    <div class="m5 mt"><VirtualKeyboard/></div>
     <FootBar />
 </template>
 
@@ -45,6 +43,6 @@ export default {
   margin: 0 5%;
 }
 .mt {
-  margin-top: 5px;
+  margin-top: 4px;
 }
 </style>

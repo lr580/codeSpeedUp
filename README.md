@@ -23,6 +23,8 @@
 ```sh
 cd backend # 在项目根目录打开 backend/ ;请安装 python 依赖，具体略
 python server.py # 运行服务器后端
+# 后台运行：nohup python3 server.py &
+# 关闭后台运行：ps aux | grep server.py 然后 kill -9 PID (PID 是第二列值)
 ```
 
 2. 运行前端：
@@ -34,6 +36,16 @@ python server.py # 运行服务器后端
   ```
 
 部署方法略，比较简单不再赘述。请根据具体情况修改前后端配置文件，如 URL 地址，端口号。(分别是 `frontend/src/config.js` 和 `backend/config.yml`)
+
+> 前端配置文件参考：(`config.js`)
+>
+> ```js
+> export default {
+>     serverURL: 'http://localhost:5802',
+>     icp: '粤ICP备2024123456号',
+>     icpHref: 'https://beian.miit.gov.cn/'
+> };
+> ```
 
 ## 数据说明
 

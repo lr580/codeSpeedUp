@@ -25,8 +25,8 @@ export default {
   margin-top: 6px;
   user-select: none; 
   color: #888;
-  max-height: 270px;
-  overflow-y: hidden;
+  /*max-height: 270px;*/
+  /*overflow-y: hidden;*/
 }
 
 .line-number {

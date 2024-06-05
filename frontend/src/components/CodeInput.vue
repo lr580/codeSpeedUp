@@ -17,28 +17,30 @@
     <el-col :span="12">参考代码</el-col>
   </el-row>
 
-  <el-row class="code-editor">
-    <el-col :span="1">
-      <LineNumbers :numRows="numRows"/>
-    </el-col>
-    <el-col :span="11">
-      <textarea
-        v-model="input" ref="textarea" 
-        @input="handleInput"
-        :rows="numRows"
-        placeholder="请输入代码..."
-        :disabled="inputDisabled"
-        @paste.prevent=""
-        class="codeinput">
-      </textarea>
-    </el-col>
-    <el-col :span="1">
-      <LineNumbers :numRows="numRows"/>
-    </el-col>
-    <el-col :span="11">
-      <pre v-html="formattedCode" class="code-display"></pre>
-    </el-col>
-  </el-row>
+  <el-scrollbar height="250px">
+    <el-row class="code-editor">
+      <el-col :span="1">
+        <LineNumbers :numRows="numRows"/>
+      </el-col>
+      <el-col :span="11">
+        <textarea
+          v-model="input" ref="textarea" 
+          @input="handleInput"
+          :rows="numRows"
+          placeholder="请输入代码..."
+          :disabled="inputDisabled"
+          @paste.prevent=""
+          class="codeinput">
+        </textarea>
+      </el-col>
+      <el-col :span="1">
+        <LineNumbers :numRows="numRows"/>
+      </el-col>
+      <el-col :span="11">
+        <pre v-html="formattedCode" class="code-display"></pre>
+      </el-col>
+    </el-row>
+  </el-scrollbar>
 </template>
 
 <script>
@@ -184,13 +186,13 @@ textarea.codeinput {
 }
 textarea.codeinput, pre.code-display {
   white-space: pre;       /* 保持空格和避免自动换行 */
-  overflow-x: auto;       /* 内容过长时显示横向滚动条 */
+  overflow-x: auto; 
   height: auto;
   padding: 4px;
   border: 1px solid #ccc;
   box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-  max-height: 270px;
-  overflow-y: auto; 
+  /*max-height: 270px;*/
+  /*overflow-y: auto; */
 }
 .topper {
   margin-bottom: 10px;
