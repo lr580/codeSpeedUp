@@ -48,9 +48,6 @@ export default {
 </script>
 
 <style scoped>
-.keyboard-container {
-  transition: height 0.5s ease-in-out;
-}
 .m5 {
   margin: 0 5%;
 }

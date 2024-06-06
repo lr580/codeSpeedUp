@@ -11,19 +11,20 @@
 
 <script>
 import { Codemirror } from "vue-codemirror";
-import { javascript } from "@codemirror/lang-javascript";
 import { python } from "@codemirror/lang-python";
 import { cpp } from "@codemirror/lang-cpp";
 import { java } from "@codemirror/lang-java";
 import { EditorView, keymap } from "@codemirror/view";
+
 
 // 创建禁止复制的扩展
 const noCopyExtension = EditorView.domEventHandlers({
   paste(event) {
     event.preventDefault();
     alert("复制功能已被禁用。");
-  }
+  },
 });
+
 
 export default {
   props: ["language"],
@@ -42,15 +43,13 @@ export default {
       const extensions = [...this.baseExtensions];
       if(!language) {
         ;//pass
-      } else if (language.endsWith(".js")) {
-        extensions.push(javascript());
       } else if (language.endsWith(".py")) {
         extensions.push(python());
       } else if (language.endsWith(".cpp")) {
         extensions.push(cpp());
       } else if (language.endsWith(".java")) {
         extensions.push(java());
-      } else {
+      } else { // 然而并不支持 LISP
         ;//pass
       }
       return extensions;
@@ -60,8 +59,6 @@ export default {
     },
     focus() {
       // TODO
-      // console.log(this.$refs.codemirror.$el);
-      // this.$refs.codemirror.$el.focus();
     }
   },
   watch: {
