@@ -18,8 +18,17 @@ export default {
     },
     layout: {
       type: Object,
-      default: function() {
-        return {
+      default: () => {
+        return navigator.userAgent.indexOf("Mac") !== -1 ?
+        {
+          'default': [
+            '` 1 2 3 4 5 6 7 8 9 0 - = {bksp}',
+            '{tab} q w e r t y u i o p [ ] \\',
+            '{lock} a s d f g h j k l ; \' {enter}',
+            '{shift} z x c v b n m , . / {shift}',
+            '{ctrl} {alt} {win} {space} {win} {alt} {ctrl}'
+          ]
+        } : {
           'default': [
             '` 1 2 3 4 5 6 7 8 9 0 - = {bksp}',
             '{tab} q w e r t y u i o p [ ] \\',
@@ -43,10 +52,15 @@ export default {
       theme: "hg-theme-default hg-layout-default myTheme",
       layout: this.layout,
       display: {
-        '{bksp}': "Backspace",
+        '{bksp}': navigator.userAgent.indexOf("Mac") !== -1 ? "Delete" : "Backspace",
         '{lock}': "Caps Lock",
         '{enter}': "Enter", '{shift}' : "Shift",
-        '{space}': "Space", '{tab}':'Tab', '{ctrl}': "Ctrl",'{alt}': "Alt",'{win}': "Win",
+        '{space}': "Space", '{tab}': 'Tab',
+        '{ctrl}': navigator.userAgent.indexOf("Mac") !== -1 ? "Control" : "Ctrl",
+        '{alt}': navigator.userAgent.indexOf("Mac") !== -1 ? "Option" : "Alt",
+        '{win}': navigator.userAgent.indexOf("Mac") !== -1
+          ? "Command"
+          : (navigator.userAgent.indexOf("Win") !== -1 ? "Win" : "Meta"),
         '1': '1 !', '2': '2 @', '3': '3 #', '4': '4 $', '5': '5 %',
         '6': '6 ^', '7': '7 &', '8': '8 *', '9': '9 (', '0': '0 )',
         '-': '- _', '=': '= +',

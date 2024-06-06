@@ -22,3 +22,8 @@ Java语法:
   HelloWorld.java: 输出一行语句
   Sumup.java: 求1+2+...+n
   LeapYear.java: 闰年判断
+
+Lisp语法:
+  Binary-Search.lisp: 二分搜索
+  Functionals.lisp: 基础函数式编程工具
+  match.lisp: 模式匹配
